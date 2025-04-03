@@ -144,6 +144,11 @@ Set-PSReadLineOption -EditMode Windows
 # Fastfetch
 if (-not (Test-CommandExists fastfetch)) {
     choco install -y fastfetch
+    fastfetch --gen-config
+    $url = "https://raw.githubusercontent.com/LaMoldy/powershell-profile/main/config-template.jsonc"
+    Invoke-RestMethod $url -OutFile "$env:temp/config.jsonc"
+    Copy-Item -Path "$env:temp/config.jsonc" -Destination "$HOME/.config/fastfetch" -Force
+    Remove-Item "$env:temp/config.jsonc" -ErrorAction SilentlyContinue
 }
 function StartFastFetch {
     Write-Host "`n"
