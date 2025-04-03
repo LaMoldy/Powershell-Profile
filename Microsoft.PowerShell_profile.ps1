@@ -2,7 +2,7 @@
 # Version 1.03
 # Last Modified: 03/04/2025
 
-$debug = $true
+$debug = $false
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor Red
@@ -146,7 +146,9 @@ if (-not (Test-CommandExists fastfetch)) {
     choco install -y fastfetch
 }
 function StartFastFetch {
-    fastfetch # Configure Later
+    Write-Host "`n"
+    fastfetch
+    Write-Host "`n"
 }
 StartFastFetch
 
