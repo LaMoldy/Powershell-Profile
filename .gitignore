@@ -1,5 +1,3 @@
 Scripts
-Modules/Terminal-Icons
-Modules/Microsoft.PowerToys.Configure
-Modules/PSReadLine
+Modules
 powershell.config.json
