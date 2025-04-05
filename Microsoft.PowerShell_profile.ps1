@@ -169,6 +169,30 @@ StartFastFetch
 # Profile Utilities
 function reload { & $PROFILE } # Reloads the profile
 
+function elevate {
+    $isAdmin = ([Security.Principal.WindowsPrincipal] `
+        [Security.Principal.WindowsIdentity]::GetCurrent() `
+    ).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+    if ($isAdmin) {
+        Write-Host "Already running as admin" -ForegroundColor Green
+    } else {
+        Write-Host "Not running as Administrator. Launching elevated shell" -ForegroundColor Yellow
+
+        $psi = New-Object System.Diagnostics.ProcessStartInfo
+        $psi.FileName = "powershell.exe"
+        $psi.Verb = "runas"
+        $psi.UseShellExecute = $true
+        $psi.Arguments = "-NoExit -Command `"Write-Host 'Elevated session started.' -ForegroundColor Cyan`""
+
+        try {
+            [System.Diagnostics.Process]::Start($psi) | Out-Null
+        } catch {
+            Write-Warning "User canceled the UAC prompt or elevation failed."
+        }
+    }
+}
+
 function ConfigProfile {
     Set-Location $env:POWERSHELL_CONFIG # Must have this set as environment variable on the computer
     nvim .
