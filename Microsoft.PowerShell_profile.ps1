@@ -80,12 +80,19 @@ function Update-PowerShell {
     }
 }
 
+function Update-Nvim-Config {
+    Write-Host "Checking for nvim config updates..." -ForegroundColor Cyan
+    Set-Location $env:NVIM_CONFIG
+    git pull
+}
+
 # Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
 if (-not $debug -and `
     ($updateInterval -eq -1 -or -not (Test-Path $timeFilePath) -or `
     ((Get-Date) - [datetime]::ParseExact((Get-Content -Path $timeFilePath), 'yyyy-MM-dd', $null)).TotalDays -gt $updateInterval)) {
     Update-Profile
     Update-PowerShell
+    Update-Nvim-Config
     $currentTime = Get-Date -Format 'yyyy-MM-dd'
     $currentTime | Out-File -FilePath $timeFilePath
 } elseif (-not $debug) {
