@@ -2,7 +2,7 @@
 # Version 1.03
 # Last Modified: 03/04/2025
 
-$debug = $false
+$debug = $true
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor Red
@@ -84,6 +84,7 @@ function Update-Nvim-Config {
     Write-Host "Checking for nvim config updates..." -ForegroundColor Cyan
     Set-Location $env:NVIM_CONFIG
     git pull
+    Set-Location $home
 }
 
 # Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
