@@ -1,8 +1,8 @@
 # Nikkolas Jackson's PowerShell Profile
-# Version 1.03
-# Last Modified: 03/04/2025
+# Version 1.04
+# Last Modified: 08/08/2025
 
-$debug = $true
+$debug = $false
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor Red
