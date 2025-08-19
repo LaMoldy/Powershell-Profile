@@ -1,8 +1,8 @@
 # Nikkolas Jackson's PowerShell Profile
-# Version 1.04
-# Last Modified: 08/08/2025
+# Version 1.05
+# Last Modified: 19/08/2025
 
-$debug = $false
+$debug = $true
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor Red
@@ -87,6 +87,13 @@ function Update-Nvim-Config {
     Set-Location $home
 }
 
+function Update-Helix-Config {
+    Write-Host "Checking for Helix config updates..." -ForegroundColor Cyan
+    Set-Location $env:HELIX_CONFIG
+    git pull
+    Set-Location $home
+}
+
 # Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
 if (-not $debug -and `
     ($updateInterval -eq -1 -or -not (Test-Path $timeFilePath) -or `
@@ -94,6 +101,7 @@ if (-not $debug -and `
     Update-Profile
     Update-PowerShell
     Update-Nvim-Config
+    Update-Helix-Config
     $currentTime = Get-Date -Format 'yyyy-MM-dd'
     $currentTime | Out-File -FilePath $timeFilePath
 } elseif (-not $debug) {
