@@ -2,7 +2,7 @@
 # Version 1.05
 # Last Modified: 19/08/2025
 
-$debug = $true
+$debug = $false
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor Red
